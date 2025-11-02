@@ -4,7 +4,6 @@ def get_person_and_pets(person_id):
     conn = sqlite3.connect('pets.db')
     cursor = conn.cursor()
 
-    # Get person info
     cursor.execute("SELECT first_name, last_name, age FROM person WHERE id = ?;", (person_id,))
     person = cursor.fetchone()
 
@@ -15,7 +14,6 @@ def get_person_and_pets(person_id):
 
     print(f"{person[0]} {person[1]}, {person[2]} years old")
 
-    # Get pet info
     cursor.execute("""
         SELECT pet.name, pet.breed, pet.age, pet.dead
         FROM pet
@@ -30,10 +28,9 @@ def get_person_and_pets(person_id):
 
     conn.close()
 
-# Main loop
 while True:
-    user_input = input("Enter person ID (or 1 to exit): ")
-    if user_input.strip() == "1":
+    user_input = input("Enter person ID (or 0 to exit): ")
+    if user_input.strip() == "0":
         break
     if user_input.isdigit():
         get_person_and_pets(int(user_input))
